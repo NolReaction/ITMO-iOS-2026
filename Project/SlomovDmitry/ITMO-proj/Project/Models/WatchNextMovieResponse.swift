@@ -39,7 +39,7 @@ nonisolated struct WatchNextMovieResponse: Decodable, Sendable {
                 genres: (genres ?? []).compactMap { Self.firstText($0.name) },
                 summary: Self.firstText(description, shortDescription),
                 premiered: year.flatMap { $0 > 0 ? String($0) : nil },
-                rating: rating?.kp.flatMap { $0 > 0 ? WatchNextShow.Rating(average: $0) : nil },
+                rating: rating?.kinopoisk.flatMap { $0 > 0 ? WatchNextShow.Rating(average: $0) : nil },
                 image: imageURL == nil ? nil : WatchNextShow.Image(
                     medium: previewURL,
                     original: imageURL
@@ -62,7 +62,12 @@ nonisolated struct WatchNextMovieResponse: Decodable, Sendable {
     }
 
     nonisolated struct Rating: Decodable, Sendable {
-        let kp: Double?
+        let kinopoisk: Double?
+
+        // В JSON провайдера рейтинг по-прежнему называется "kp".
+        private enum CodingKeys: String, CodingKey {
+            case kinopoisk = "kp"
+        }
     }
 
     nonisolated struct Poster: Decodable, Sendable {

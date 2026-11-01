@@ -61,8 +61,11 @@ struct WatchNextTonightView: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 } else if candidates.isEmpty {
-                    ContentUnavailableView("Добавьте что-нибудь в список", systemImage: "sparkles",
-                                           description: Text("Сначала сохраните фильм или сериал со статусом «Хочу посмотреть»."))
+                    ContentUnavailableView(
+                        "Добавьте что-нибудь в список",
+                        systemImage: "sparkles",
+                        description: Text("Сначала сохраните фильм или сериал со статусом «Хочу посмотреть».")
+                    )
                 }
             }
             .padding(24)

@@ -3,9 +3,13 @@ import SwiftUI
 struct WatchNextDiscoverView: View {
     @EnvironmentObject private var library: WatchNextLibraryViewModel
     // Управление загрузкой
-    @StateObject private var viewModel = WatchNextCatalogViewModel()
+    @StateObject private var viewModel: WatchNextCatalogViewModel
     // Текст, который я ввожу
     @State private var searchText = ""
+
+    init(sampleShows: [WatchNextShow]? = nil) {
+        _viewModel = StateObject(wrappedValue: WatchNextCatalogViewModel(sampleShows: sampleShows))
+    }
 
     var body: some View {
         ScrollView {
@@ -70,8 +74,11 @@ struct WatchNextDiscoverView: View {
                 }
 
                 if viewModel.shows.isEmpty && !viewModel.isLoading && viewModel.errorMessage == nil {
-                    ContentUnavailableView("Ничего не найдено", systemImage: "magnifyingglass",
-                                           description: Text("Попробуйте другое название или загрузите каталог ещё раз."))
+                    ContentUnavailableView(
+                        "Ничего не найдено",
+                        systemImage: "magnifyingglass",
+                        description: Text("Попробуйте другое название или загрузите каталог ещё раз.")
+                    )
                 }
 
                 LazyVStack(spacing: 12) {
@@ -83,6 +90,7 @@ struct WatchNextDiscoverView: View {
                             WatchNextShowRow(show: show)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("watchnext.catalog.\(show.catalogID)")
                     }
                 }
                 if !viewModel.shows.isEmpty {

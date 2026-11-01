@@ -14,7 +14,7 @@ struct ITMO_projApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: Lab4Note.self)
+        .modelContainer(for: Lab4Note.self, inMemory: WatchNextUITestSupport.isEnabled)
     }
 }
 

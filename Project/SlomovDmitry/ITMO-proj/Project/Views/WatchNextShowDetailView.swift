@@ -69,6 +69,7 @@ struct WatchNextShowDetailView: View {
                             }
                         }
                         .pickerStyle(.menu)
+                        .accessibilityIdentifier("watchnext.status")
 
                         Button("Удалить из моего списка", role: .destructive) {
                             confirmRemoval = true
@@ -84,6 +85,7 @@ struct WatchNextShowDetailView: View {
                     }
                     .buttonStyle(.glassProminent)
                     .controlSize(.large)
+                    .accessibilityIdentifier("watchnext.add")
                 }
 
                 VStack(alignment: .leading, spacing: 12) {

@@ -15,9 +15,11 @@ struct WatchNextLibraryView: View {
                     .font(.largeTitle.bold())
                 Text("Сохранено: \(library.entries.count)")
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("watchnext.library.count")
 
                 Toggle("Скрывать просмотренное", isOn: $hideFinished)
                     .font(.subheadline)
+                    .accessibilityIdentifier("watchnext.hideFinished")
 
                 if let error = library.errorMessage {
                     Label(error, systemImage: "exclamationmark.triangle")
@@ -44,9 +46,11 @@ struct WatchNextLibraryView: View {
                                 WatchNextShowRow(show: entry.show)
                             }
                             .buttonStyle(.plain)
+                            .accessibilityIdentifier("watchnext.library.\(entry.catalogID)")
                             HStack {
                                 Image(systemName: entry.status == .finished ? "checkmark.circle.fill" : "bookmark.fill")
                                 Text(entry.status.title)
+                                    .accessibilityIdentifier("watchnext.library.status.\(entry.catalogID)")
                             }
                             .font(.caption.weight(.medium))
                             .foregroundStyle(.mint)

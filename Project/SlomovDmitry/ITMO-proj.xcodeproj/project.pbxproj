@@ -32,6 +32,8 @@
 		EA9D1FC73052FB94007AB349 /* ITMO-proj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ITMO-proj.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA9D1FD43052FB95007AB349 /* ITMO-projTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ITMO-projTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA9D1FDE3052FB95007AB349 /* ITMO-projUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ITMO-projUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAD32A433093A0F000AE62DD /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		EAD32A453093A0F000AE62DD /* Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -82,6 +84,8 @@
 		EA9D1FBE3052FB94007AB349 = {
 			isa = PBXGroup;
 			children = (
+				EAD32A433093A0F000AE62DD /* .swiftlint.yml */,
+				EAD32A463093A0F000AE62DD /* SwiftLintDemo */,
 				EA9D1FC93052FB94007AB349 /* ITMO-proj */,
 				EA9D1FD73052FB95007AB349 /* ITMO-projTests */,
 				EA9D1FE13052FB95007AB349 /* ITMO-projUITests */,
@@ -99,6 +103,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		EAD32A443093A0F000AE62DD /* Excluded */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Excluded;
+			sourceTree = "<group>";
+		};
+		EAD32A463093A0F000AE62DD /* SwiftLintDemo */ = {
+			isa = PBXGroup;
+			children = (
+				EAD32A443093A0F000AE62DD /* Excluded */,
+				EAD32A453093A0F000AE62DD /* Example.swift */,
+			);
+			path = SwiftLintDemo;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -109,6 +129,7 @@
 				EA9D1FC33052FB94007AB349 /* Sources */,
 				EA9D1FC43052FB94007AB349 /* Frameworks */,
 				EA9D1FC53052FB94007AB349 /* Resources */,
+				EAD32A473093A13F00AE62DD /* Run Script SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -242,6 +263,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EAD32A473093A13F00AE62DD /* Run Script SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin:/usr/local/bin\"\n\ncd \"$SRCROOT\" || exit 1\n\nif command -v swiftlint >/dev/null 2>&1; then\n    swiftlint lint --config \"$SRCROOT/.swiftlint.yml\"\nelse\n    echo \"warning: SwiftLint not installed. Run: brew install swiftlint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EA9D1FC33052FB94007AB349 /* Sources */ = {
@@ -411,6 +454,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D7YLA78FK2;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -443,6 +487,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D7YLA78FK2;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

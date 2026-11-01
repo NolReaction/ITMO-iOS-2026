@@ -60,7 +60,8 @@ final class WatchNextLibraryViewModel: ObservableObject {
             try context.save()
         } catch {
             context.rollback()
-            errorMessage = "Не удалось сохранить изменения. Проверьте свободное место на устройстве и попробуйте ещё раз."
+            errorMessage = "Не удалось сохранить изменения. "
+                + "Проверьте свободное место на устройстве и попробуйте ещё раз."
             return false
         }
 

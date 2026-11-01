@@ -1,6 +1,5 @@
 import Foundation
 import Alamofire
-import Foundation
 
 // APIClient получает и декодирует JSON. Service готовит результат для приложения.
 final class Lab6PostsService: Sendable {

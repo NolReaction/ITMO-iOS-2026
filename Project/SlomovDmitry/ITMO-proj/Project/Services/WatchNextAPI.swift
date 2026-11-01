@@ -8,7 +8,7 @@ actor WatchNextAPI {
     init(session: URLSession = .shared) {
         self.session = session
     }
-    
+
     // Подготавливает параметры поиска по названию и вызывает fetch(...)
     func search(_ query: String) async throws -> [WatchNextShow] {
         try Task.checkCancellation()
@@ -136,7 +136,8 @@ nonisolated enum WatchNextAPIError: LocalizedError, Sendable {
         case .httpStatus(401):
             return "Ключ API не принят. Проверьте его в разделе «Настройки → Ключ API»."
         case .httpStatus(403):
-            return "Доступ ограничен: возможно, исчерпан лимит запросов или этот метод недоступен вашему ключу. Проверьте квоту ПоискКино."
+            return "Доступ ограничен: возможно, исчерпан лимит запросов "
+                + "или этот метод недоступен вашему ключу. Проверьте квоту ПоискКино."
         case .httpStatus(429):
             return "Слишком много запросов. Подождите немного и повторите попытку."
         case .httpStatus(let code) where code >= 500:

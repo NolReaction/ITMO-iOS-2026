@@ -5,7 +5,6 @@
 //  Created by Дмитрий Сломов on 10.09.2026.
 //
 
-import Testing
 import XCTest
 // Подключает встроенный инструмент Apple для тестирования
 @testable import ITMO_proj

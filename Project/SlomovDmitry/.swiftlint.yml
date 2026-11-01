@@ -1,0 +1,37 @@
+# Какие папки проверяем.
+included:
+  - ITMO-proj/Lab6
+  - ITMO-proj/Project
+  - SwiftLintDemo
+
+# Какие папки и файлы пропускаем.
+excluded:
+  - SwiftLintDemo/Excluded
+  - SwiftLintDemo/IgnoredFile.swift
+  - ITMO-projTests
+  - ITMO-projUITests
+
+# Для начала используем небольшой набор проверок.
+only_rules:
+  - line_length
+  - identifier_name
+  - force_unwrapping
+  - trailing_whitespace
+
+line_length:
+  warning: 120
+  error: 200
+
+identifier_name:
+  min_length:
+    warning: 3
+    error: 2
+  excluded:
+    - "^id$"
+    - "^x$"
+    - "^y$"
+
+force_unwrapping:
+  severity: warning
+
+reporter: xcode

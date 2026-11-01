@@ -10,7 +10,10 @@ struct WatchNextView: View {
     var body: some View {
         Group {
             if let container {
-                WatchNextHomeView(context: container.mainContext)
+                WatchNextHomeView(
+                    context: container.mainContext,
+                    sampleShows: WatchNextUITestSupport.catalogShows
+                )
                     .modelContainer(container)
             } else if let storageError {
                 ContentUnavailableView {
@@ -25,6 +28,7 @@ struct WatchNextView: View {
                 ProgressView("Открываем WatchNext…")
             }
         }
+        .defaultAppStorage(WatchNextUITestSupport.defaults)
         .preferredColorScheme(.dark)
         .environment(\.locale, Locale(identifier: "ru"))
         .tint(.mint)
@@ -35,16 +39,29 @@ struct WatchNextView: View {
 
     private func openStorage() {
         do {
-            // Отдельный файл: база Lab4 продолжает работать как раньше.
-            let directory = URL.applicationSupportDirectory.appending(path: "WatchNext", directoryHint: .isDirectory)
-            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
             let schema = Schema([WatchNextSavedShow.self])
-            let configuration = ModelConfiguration(
-                "WatchNext",
-                schema: schema,
-                url: directory.appending(path: "WatchNext.store"),
-                cloudKitDatabase: .none
-            )
+            let configuration: ModelConfiguration
+            if WatchNextUITestSupport.isEnabled {
+                // Каждый UI-тест получает пустую базу в памяти.
+                configuration = ModelConfiguration(
+                    "WatchNextUITests",
+                    schema: schema,
+                    isStoredInMemoryOnly: true,
+                    cloudKitDatabase: .none
+                )
+            } else {
+                // Отдельный файл: база Lab4 продолжает работать как раньше.
+                let directory = URL.applicationSupportDirectory.appending(
+                    path: "WatchNext", directoryHint: .isDirectory
+                )
+                try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+                configuration = ModelConfiguration(
+                    "WatchNext",
+                    schema: schema,
+                    url: directory.appending(path: "WatchNext.store"),
+                    cloudKitDatabase: .none
+                )
+            }
             container = try ModelContainer(for: schema, configurations: [configuration])
             storageError = nil
         } catch {
@@ -56,14 +73,16 @@ struct WatchNextView: View {
 @MainActor
 private struct WatchNextHomeView: View {
     @StateObject private var library: WatchNextLibraryViewModel
+    private let sampleShows: [WatchNextShow]?
 
-    init(context: ModelContext) {
+    init(context: ModelContext, sampleShows: [WatchNextShow]? = nil) {
         _library = StateObject(wrappedValue: WatchNextLibraryViewModel(context: context))
+        self.sampleShows = sampleShows
     }
 
     var body: some View {
         TabView {
-            WatchNextDiscoverView()
+            WatchNextDiscoverView(sampleShows: sampleShows)
                 .tabItem { Label("Каталог", systemImage: "sparkles") }
             WatchNextLibraryView()
                 .tabItem { Label("Мой список", systemImage: "bookmark.fill") }

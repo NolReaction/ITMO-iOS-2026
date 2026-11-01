@@ -10,7 +10,13 @@ final class WatchNextCatalogViewModel: ObservableObject {
     @Published private(set) var loadedQuery = "" // по какому запросу получены результаты
 
     private let api = WatchNextAPI() // объект сетевого сервиса WatchNextAPI
+    private let sampleShows: [WatchNextShow]?
     private var hasLoaded = false // была ли уже успешная загрузка
+
+    // Локальные данные можно передать для UI-тестов. Обычный запуск использует API.
+    init(sampleShows: [WatchNextShow]? = nil) {
+        self.sampleShows = sampleShows
+    }
 
     /*
      Проверяет hasLoaded. Если ещё ничего не загружали, вызывает load(query:)
@@ -37,7 +43,11 @@ final class WatchNextCatalogViewModel: ObservableObject {
 
         do {
             let result: [WatchNextShow]
-            if query.isEmpty {
+            if let sampleShows {
+                result = query.isEmpty
+                    ? sampleShows
+                    : sampleShows.filter { $0.name.localizedCaseInsensitiveContains(query) }
+            } else if query.isEmpty {
                 result = try await api.discover()
             } else {
                 result = try await api.search(query)

@@ -66,7 +66,10 @@ struct Lab6View: View {
                 }
                 .disabled(viewModel.isBusy)
 
-                Text("Для ошибки сети выключите интернет на устройстве или Mac с симулятором и повторите GET. Ошибка JSON проверяется настоящим ответом: объект вместо массива.")
+                Text(
+                    "Для ошибки сети выключите интернет на устройстве или Mac с симулятором и повторите GET. "
+                        + "Ошибка JSON проверяется настоящим ответом: объект вместо массива."
+                )
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -77,7 +80,10 @@ struct Lab6View: View {
                 } label: {
                     Label("Нажатий: \(tapCount)", systemImage: "hand.tap")
                 }
-                Text("Счётчик доступен во время сетевого запроса. JSON и обработка данных выполняются в фоновой очереди GCD.")
+                Text(
+                    "Счётчик доступен во время сетевого запроса. "
+                        + "JSON и обработка данных выполняются в фоновой очереди GCD."
+                )
                     .font(.footnote)
                     .foregroundStyle(.secondary)
 
@@ -98,7 +104,10 @@ struct Lab6View: View {
 
             if let feed = viewModel.feed {
                 Section("Результат GET: \(feed.posts.count) публикаций") {
-                    Text("Всего слов в заголовках и текстах: \(feed.totalWordCount). Пробелы и переносы нормализованы, записи отсортированы по id.")
+                    Text(
+                        "Всего слов в заголовках и текстах: \(feed.totalWordCount). "
+                            + "Пробелы и переносы нормализованы, записи отсортированы по id."
+                    )
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                     ForEach(feed.posts) { post in
