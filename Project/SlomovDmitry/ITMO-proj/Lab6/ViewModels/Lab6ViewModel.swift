@@ -16,8 +16,8 @@ final class Lab6ViewModel: ObservableObject {
 
     private let service: Lab6PostsService
 
-    init(service: Lab6PostsService = Lab6PostsService()) {
-        self.service = service
+    init(service: Lab6PostsService? = nil) {
+        self.service = service ?? Lab6PostsService()
     }
 
     var canCreate: Bool {
